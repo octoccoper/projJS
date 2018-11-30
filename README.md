@@ -1,1 +1,1 @@
-# projJS
+# adding information to list
