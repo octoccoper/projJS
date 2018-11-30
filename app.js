@@ -9,39 +9,43 @@ const taskInput = document.querySelector("#task");
 function loadEventListeners() {
 
   // Add task event
-  form.addEventListener("submit", addTask)
+  form.addEventListener("submit", addTask);
+  clearBtn.addEventListener("click", clearTasks);
 }
 
 // Add task
-function addTask (e) {
-if(taskInput.value === ""){
-  console.log("Input with new task value is empty");
+function addTask(e) {
+  if (taskInput.value === "") {
+    console.log("Input with new task value is empty");
+  } else {
+    // Create li element
+    const li = document.createElement("li");
+
+    // Add classname to li
+    li.className = "collection-item";
+
+    // Create text node and append to li
+    li.appendChild(document.createTextNode(taskInput.value));
+
+    // Create new link element
+    const link = document.createElement("a");
+    link.className = "delete-item secondary-content";
+
+    //Add html icon
+    link.innerHTML = "<i class='fa fa-remove'></i>";
+
+    // Append the link to li
+    li.appendChild(link);
+
+    // Append li to ul
+    document.querySelector("ul.collection").appendChild(li);
+  }
+  // Prevent default events
+  e.preventDefault();
 }
-else {
-// Create li element
-const li = document.createElement("li");
 
-// Add classname to li
-li.className = "collection-item";
-
-// Create text node and append to li
-li.appendChild(document.createTextNode(taskInput.value));
+function clearTasks() {
+  taskList.innerHTML="";
 }
 
-// Create new link element
-const link = document.createElement("a");
-link.className = "delete-item secondary-content";
-
-//Add html icon
-link.innerHTML = "<i class='fa fa-remove'></i>";
-
-// Append the link to li
-li.appendChild(link);
-
-// Append li to ul
-document.querySelector("ul.collection").appendChild(li);
-
-
-// Prevent default events
-e.preventDefault();
-}
+loadEventListeners();
