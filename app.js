@@ -31,8 +31,7 @@ function addTaskOnEnter(e) {
   if (e.which == 13 || e.keyCode == 13) {
     addItem();
   }
- // Prevent default events
- e.preventDefault();
+
 }
 
 // Add item
@@ -64,15 +63,19 @@ function addItem() {
 }
 
 function clearTasks() {
-  taskList.innerHTML = "";
+  while (taskList.firstChild) { 
+    taskList.removeChild(taskList.firstChild);
+  }
+
   taskInput.value = "";
 }
 
 function removeTask(e) {
   if (e.target.parentElement.classList.contains("delete-item")) {
-e.target.parentElement.parentElement.remove();
+    if (confirm("Are you sure?")) { 
+      e.target.parentElement.parentElement.remove();
+    }
   }
-
 }
 
 loadEventListeners();
