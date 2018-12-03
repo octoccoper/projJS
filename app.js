@@ -32,7 +32,6 @@ function addTaskOnEnter(e) {
   if (e.which == 13 || e.keyCode == 13) {
     addItem();
   }
-
 }
 
 // Add item
@@ -59,8 +58,11 @@ function addItem() {
   // Append li to ul
   document.querySelector("ul.collection").appendChild(li);
 
-  // Clear input with entered data
-  taskInput.value = "";
+  // Store task in local storage
+  storeTaskInLocalStorage(taskInput.value);
+
+    // Clear input with entered data
+    taskInput.value = "";
 }
 
 function clearTasks() {
@@ -92,5 +94,19 @@ function filterTasks(e) {
       }
     });
 }
+
+function storeTaskInLocalStorage(task) {
+  let tasks;
+  if (localStorage.getItem("tasks") === null) {
+    tasks = [];
+  } else { 
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+  }
+
+  tasks.push(task);
+
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
 
 loadEventListeners();
