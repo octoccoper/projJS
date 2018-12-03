@@ -9,6 +9,7 @@ const taskInput = document.querySelector("#task");
 function loadEventListeners() {
 
   // Add task events
+  document.addEventListener("DOMContentLoaded", taskLoading);
   filter.addEventListener("keydown", filterTasks);
   form.addEventListener("submit", addTask);
   form.addEventListener("keydown", addTaskOnEnter);
@@ -61,8 +62,8 @@ function addItem() {
   // Store task in local storage
   storeTaskInLocalStorage(taskInput.value);
 
-    // Clear input with entered data
-    taskInput.value = "";
+  // Clear input with entered data
+  taskInput.value = "";
 }
 
 function clearTasks() {
@@ -99,7 +100,7 @@ function storeTaskInLocalStorage(task) {
   let tasks;
   if (localStorage.getItem("tasks") === null) {
     tasks = [];
-  } else { 
+  } else {
     tasks = JSON.parse(localStorage.getItem("tasks"));
   }
 
@@ -108,5 +109,36 @@ function storeTaskInLocalStorage(task) {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
+function taskLoading() {
+  let tasks;
+  if (localStorage.getItem("tasks") === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+  }
+  tasks.forEach(function (task) {
+    // Create li element
+    const li = document.createElement("li");
+
+    // Add classname to li
+    li.className = "collection-item";
+
+    // Create text node and append to li
+    li.appendChild(document.createTextNode(task));
+
+    // Create new link element
+    const link = document.createElement("a");
+    link.className = "delete-item secondary-content";
+
+    // Add html icon
+    link.innerHTML = "<i class='fa fa-remove'></i>";
+
+    // Append the link to li
+    li.appendChild(link);
+
+    // Append li to ul
+    document.querySelector("ul.collection").appendChild(li);
+  })
+}
 
 loadEventListeners();
